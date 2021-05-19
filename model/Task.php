@@ -44,7 +44,7 @@ class Task
 
     public function getCompleted()
     {
-        $this->_completed;
+        return $this->_completed;
     }
 
     public function setId($id)

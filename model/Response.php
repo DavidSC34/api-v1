@@ -51,16 +51,15 @@ class Response
             $this->_responseData['statusCode'] = 500;
             $this->_responseData['success'] = false;
             $this->addMessage("Response creation error");
-
             $this->_responseData['messages'] = $this->_messages;
         } else {
             http_response_code($this->_httpStatusCode);
             $this->_responseData['statusCode'] = $this->_httpStatusCode;
-            $this->_respondeData['success'] = $this->_success;
-            $this->_respondeData['messages'] = $this->_messages;
-            $this->_respondeData['data'] = $this->_data;
+            $this->_responseData['success'] = $this->_success;
+            $this->_responseData['messages'] = $this->_messages;
+            $this->_responseData['data'] = $this->_data;
         }
 
-        echo json_encode($this->_respondeData);
+        echo json_encode($this->_responseData);
     }
 }
