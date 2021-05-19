@@ -139,24 +139,26 @@ elseif (array_key_exists("completed",$_GET)) {
         $response = new Response();
         $response->setHttpStatusCode(400);
         $response->setSuccess(false);
-        $response->addMessage("Completed filter must be Yor N");
+        $response->addMessage("Completed filter must be Y or N");
         $response->send();
         exit;
 
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($_SERVER['REQUEST_METHOD'] ==='GET') {
 
         try {
             
-          $query = $readDB->prepare("SELECT id, title description, DATE_FORMAT(deadline,'%d/%m/%Y %H:%i') as deadline, completed FROM tbltasks WHETE completed=:completed");
+          $query = $readDB->prepare("SELECT id, title, description, DATE_FORMAT(deadline,'%d/%m/%Y %H:%i') as deadline, completed FROM tbltasks WHERE completed=:completed");
           $query->bindParam(':completed',$completed, PDO::PARAM_STR);
+          $query->execute();
 
-          $rowCoint = $query->rowCount();
+          $rowCount = $query->rowCount();
           $taskArray = array();
 
           while($row = $query->fetch(PDO::FETCH_ASSOC)){
                 $task = new Task($row['id'], $row['title'], $row['description'], $row['deadline'],$row['completed']);
+                
                 $taskArray[] = $task->returnTaskAsArray();
           }
 
